@@ -60,3 +60,14 @@ export function createSubmission(tool_code, offset_um) {
     body: JSON.stringify({ tool_code, offset_um: Number(offset_um) }),
   });
 }
+
+export function fetchWindowInventory({ start, end, hours } = {}) {
+  // 窗参数全部交给服务端解析聚合，前端只传参，绝不在本地加总明细。
+  const params = new URLSearchParams();
+  if (start) params.set("start", start);
+  if (end) params.set("end", end);
+  if (hours !== undefined && hours !== null && hours !== "")
+    params.set("hours", String(hours));
+  const qs = params.toString();
+  return request(`/inventory/window${qs ? `?${qs}` : ""}`);
+}

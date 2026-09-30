@@ -7,6 +7,7 @@ from ninja.errors import HttpError
 
 from desk.auth_utils import bearer_auth, create_access_token, verify_password
 from desk.models import OffsetSubmission, User
+from desk.services import resolve_window, window_inventory
 
 api = NinjaAPI(title="数控刀补复核台", version="1.0")
 
@@ -106,3 +107,21 @@ def create_submission(request: HttpRequest, body: SubmissionIn):
         status=OffsetSubmission.Status.PENDING,
     )
     return _to_out(row)
+
+
+@api.get("/inventory/window", auth=bearer_auth)
+def inventory_window(
+    request: HttpRequest,
+    start: Optional[datetime] = None,
+    end: Optional[datetime] = None,
+    hours: Optional[float] = None,
+):
+    """超差盘点：按创建时刻半开窗 [start, end) 服务端聚合。
+
+    汇总量（四类量与占比）与明细行在同一次查询里产出，前端只展示，禁止自行加总。
+    """
+    try:
+        window_start, window_end = resolve_window(start, end, hours)
+    except ValueError as exc:
+        raise HttpError(400, str(exc))
+    return window_inventory(window_start, window_end).as_payload()

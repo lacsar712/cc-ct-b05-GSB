@@ -143,3 +143,96 @@ td {
   color: #b91c1c;
   font-weight: 600;
 }
+
+.inventory-page .window-picker {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.window-mode {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.inline-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+}
+
+.inline-field input[type="radio"] {
+  width: auto;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.stat {
+  margin-top: 0;
+}
+
+.stat-label {
+  color: #5a6478;
+  font-size: 0.9rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0.15rem 0;
+}
+
+.stat-ratio {
+  font-size: 0.88rem;
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+.stat-ratio.sub {
+  color: #5a6478;
+  font-weight: 400;
+}
+
+.pass-stat .stat-value {
+  color: #15803d;
+}
+
+.fail-stat .stat-value {
+  color: #b91c1c;
+}
+
+.calibration {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #5a6478;
+}
+
+.bucket {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.bucket-pass {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.bucket-fail {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.bucket-unsettled {
+  background: #e8edf5;
+  color: #5a6478;
+}
