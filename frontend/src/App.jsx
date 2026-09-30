@@ -8,6 +8,7 @@ import {
   login,
   setSession,
 } from "./api";
+import InventoryPage from "./InventoryPage";
 
 const statusLabel = {
   pending: "待复核",
@@ -24,6 +25,9 @@ function readHash() {
   const raw = (location.hash || "#/").replace(/^#/, "") || "/";
   const m = raw.match(/^\/detail\/(\d+)/);
   if (m) return { name: "detail", id: Number(m[1]) };
+  if (raw === "/inventory" || raw.startsWith("/inventory")) {
+    return { name: "inventory", id: null };
+  }
   return { name: "home", id: null };
 }
 
@@ -80,7 +84,7 @@ function App() {
     window.addEventListener("hashchange", onHash);
     if (user()) {
       if (route().name === "detail") loadDetail(route().id);
-      else loadRows();
+      else if (route().name === "home") loadRows();
     }
     return () => window.removeEventListener("hashchange", onHash);
   });
@@ -149,6 +153,16 @@ function App() {
               }}
             >
               复核总览
+            </a>
+            <a
+              href="#/inventory"
+              class={route().name === "inventory" ? "active" : ""}
+              onClick={(e) => {
+                e.preventDefault();
+                location.hash = "#/inventory";
+              }}
+            >
+              盘点台
             </a>
           </nav>
         </Show>
@@ -265,6 +279,10 @@ function App() {
               <p class="hint">暂无记录</p>
             </Show>
           </section>
+        </Show>
+
+        <Show when={route().name === "inventory"}>
+          <InventoryPage user={user()} />
         </Show>
 
         <Show when={route().name === "detail"}>

@@ -143,3 +143,130 @@ td {
   color: #b91c1c;
   font-weight: 600;
 }
+
+/* ---- 盘点台 ---- */
+.window-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.window-picker .window-range {
+  flex-basis: 100%;
+  margin: 0.25rem 0 0;
+}
+
+select {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #c5ceda;
+  border-radius: 6px;
+  background: #fff;
+}
+
+select:disabled,
+input:disabled {
+  background: #eef1f5;
+  color: #6b7488;
+  cursor: not-allowed;
+}
+
+.bucket-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.bucket {
+  border: 1px solid #e0e6ef;
+  border-left-width: 5px;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  background: #fafbfd;
+}
+
+.bucket-pass {
+  border-left-color: #15803d;
+}
+
+.bucket-fail {
+  border-left-color: #b91c1c;
+}
+
+.bucket-unsettled {
+  border-left-color: #b45309;
+}
+
+.bucket-total {
+  border-left-color: #475569;
+  background: #f1f4f9;
+}
+
+.bucket-label {
+  font-size: 0.9rem;
+  color: #5a6478;
+}
+
+.bucket-count {
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.bucket-ratio {
+  font-size: 0.85rem;
+  color: #1e3a8a;
+}
+
+.unsettled {
+  color: #b45309;
+  font-weight: 600;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  background: #e8edf5;
+}
+
+.tag-pass {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.tag-fail {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.tag-unsettled {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.recon {
+  margin: 0.75rem 0;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.recon.ok {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.recon.bad {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.criterion h3 {
+  margin-bottom: 0.25rem;
+}

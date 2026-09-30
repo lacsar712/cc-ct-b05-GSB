@@ -60,3 +60,10 @@ export function createSubmission(tool_code, offset_um) {
     body: JSON.stringify({ tool_code, offset_um: Number(offset_um) }),
   });
 }
+
+// 超差盘点：四类量、占比、明细一次由服务端同一次聚合返回，前端不得自行加总。
+export function fetchInventory({ widthHours, endAt } = {}) {
+  const params = new URLSearchParams({ width_hours: String(widthHours) });
+  if (endAt) params.set("end_at", endAt);
+  return request(`/inventory?${params.toString()}`);
+}

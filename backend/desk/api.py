@@ -6,6 +6,7 @@ from ninja import NinjaAPI, Schema
 from ninja.errors import HttpError
 
 from desk.auth_utils import bearer_auth, create_access_token, verify_password
+from desk.inventory import compute_inventory
 from desk.models import OffsetSubmission, User
 
 api = NinjaAPI(title="数控刀补复核台", version="1.0")
@@ -106,3 +107,24 @@ def create_submission(request: HttpRequest, body: SubmissionIn):
         status=OffsetSubmission.Status.PENDING,
     )
     return _to_out(row)
+
+
+@api.get("/inventory", auth=bearer_auth)
+def inventory(
+    request: HttpRequest,
+    width_hours: int = 1,
+    end_at: Optional[str] = None,
+):
+    """超差盘点专页唯一数据源。
+
+    一次返回窗边界、口径说明、四类量与占比（buckets）、按窗重查明细（rows）
+    以及聚合对明细的对账结果。数字一律由服务端 compute_inventory 产出，
+    前端不得自行加总。操作员与复核员均可只读访问；窗宽调整的可写性在前端按
+    can_write 控制（复核员只读）。
+    """
+    try:
+        payload = compute_inventory(width_hours, end_at)
+    except ValueError as exc:
+        raise HttpError(400, str(exc))
+    payload["can_write"] = request.auth.can_write
+    return payload
